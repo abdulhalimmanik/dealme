@@ -73,12 +73,12 @@
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Billing address</h4>
-            <form method="POST" class="needs-validation" novalidate>
+            <form method="POST" class="needs-validation" novalidate action="{{ url('/pay-via-ajax') }}">
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <label for="firstName">Full name</label>
                         <input type="text" name="customer_name" class="form-control" id="customer_name" placeholder=""
-                               value="John Doe" required>
+                               value="John Doe manik" required>
                         <div class="invalid-feedback">
                             Valid customer name is required.
                         </div>
@@ -204,7 +204,7 @@
     obj.amount = $('#total_amount').val();
 
     $('#sslczPayBtn').prop('postdata', obj);
-
+    
     (function (window, document) {
         var loader = function () {
             var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];

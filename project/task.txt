@@ -1,0 +1,17 @@
+dashboard add ssl commerce
+order show after payment
+info save in database of transaction 
+status change of transaction
+flow check of ssl commerce + * order check
+route check
+table change of other action
+
+------
+
+method
+txnid?
+charge_id?
+order_number
+payment_status
+status
+pay_id

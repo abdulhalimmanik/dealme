@@ -887,6 +887,19 @@ Route::post('/fail', 'SslCommerzPaymentController@fail');
 Route::post('/cancel', 'SslCommerzPaymentController@cancel');
 
 Route::post('/ipn', 'SslCommerzPaymentController@ipn');
+
+// Route::get('/example1', 'CheckoutController@exampleEasyCheckout');
+// Route::get('/example2', 'CheckoutController@exampleHostedCheckout');
+
+// Route::post('/pay', 'CheckoutController@index');
+// Route::post('/pay-via-ajax', 'CheckoutController@payViaAjax');
+
+// Route::post('/success', 'CheckoutController@success');
+// Route::post('/fail', 'CheckoutController@fail');
+// Route::post('/cancel', 'CheckoutController@cancel');
+
+// Route::post('/ipn', 'CheckoutController@ipn');
+Route::get('/payviasslcommerce', 'Front\PaymentController@payviasslcommerce')->name('payviasslcommerce');
 //SSLCOMMERZ END
 
 Route::prefix('user')->group(function () {
@@ -1318,6 +1331,7 @@ Route::group(['middleware' => 'maintenance'], function () {
   Route::post('/stripe-submit', 'Front\StripeController@store')->name('stripe.submit');
 
 
+
   // Molly Routes
 
   Route::post('/molly/submit', 'Front\MollyController@store')->name('molly.submit');
@@ -1334,6 +1348,9 @@ Route::group(['middleware' => 'maintenance'], function () {
 
   Route::post('/cashondelivery', 'Front\CheckoutController@cashondelivery')->name('cash.submit');
   Route::post('/gateway', 'Front\CheckoutController@gateway')->name('gateway.submit');
+
+  // Digital Payment via SSL Commerce
+  Route::post('/sslcommerce', 'Front\CheckoutController@sslcommerce')->name('sslcommerce.submit');
   // CHECKOUT SECTION ENDS
 
   // TAG SECTION

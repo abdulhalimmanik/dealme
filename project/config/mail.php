@@ -1,10 +1,5 @@
 <?php
-MAIL_DRIVER=smtp
-MAIL_HOST=smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_ENCRYPTION=null
+
 return [
 
     /*
@@ -134,10 +129,10 @@ return [
 
     'stream' => [
         'ssl' => [
-           'allow_self_signed' => true,
-           'verify_peer' => false,
-           'verify_peer_name' => false,
+            'allow_self_signed' => true,
+            'verify_peer' => false,
+            'verify_peer_name' => false,
         ],
-     ],
+    ],
 
 ];

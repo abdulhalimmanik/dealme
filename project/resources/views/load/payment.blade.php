@@ -3,6 +3,11 @@
 
 
 @endif
+
+@if($payment == 'sslcommerce') 
+<input type="hidden" name="method" value="SSL Commerce">
+@endif
+
 @if($payment == 'paypal') 
 <input type="hidden" name="method" value="Paypal">
 <input type="hidden" name="cmd" value="_xclick">

@@ -89,14 +89,6 @@
 								
 									<div class="content">
 										<div class="personal-info">
-											<h5>
-												<button class="your-button-class" id="sslczPayBtn"
-														token="if you have any token validation"
-														postdata="your javascript arrays or objects which requires in backend"
-														order="If you already have the transaction generated for current order"
-														endpoint="/pay-via-ajax"> Pay Now
-												</button>
-											</h5>
 											<h5 class="title">
 												{{ $langg->lang746 }} :
 											</h5>
@@ -354,7 +346,8 @@
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="nav flex-column"  role="tablist" aria-orientation="vertical">
-														@if($gs->paypal_check == 1)
+																
+															@if($gs->paypal_check == 1)
 															<a class="nav-link payment" data-val="" data-show="no" data-form="{{route('paypal.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'paypal','slug2' => 0]) }}" id="v-pills-tab1-tab" data-toggle="pill" href="#v-pills-tab1" role="tab" aria-controls="v-pills-tab1" aria-selected="true">
 																	<div class="icon">
 																			<span class="radio"></span>
@@ -413,6 +406,28 @@
 															</a>
 														 @endif
 														@endif
+														<a class="nav-link payment" data-val="" data-show="no" data-form="{{route('sslcommerce.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'sslcommerce','slug2' => 0]) }}" id="v-pills-tab9-tab" data-toggle="pill" href="#v-pills-tab9" role="tab" aria-controls="v-pills-tab9" aria-selected="false">
+																	<div class="icon">
+																			<span class="radio"></span>
+																	</div>
+																	<p>
+																			{{-- {{ $langg->lang762 }}
+
+																		@if($gs->cod_text != null)
+
+																		<small>
+																				{{ $gs->cod_text }}
+																		</small>
+
+																		@endif --}}
+																		Digital Payment
+																		<small>
+																				{{-- {{ $gs->cod_text }} --}}
+																				Pay via SSL Commerce
+																		</small>
+
+																	</p>
+															</a>
 														@if($gs->is_instamojo == 1)
 															<a class="nav-link payment" data-val="" data-show="no" data-form="{{route('instamojo.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'instamojo','slug2' => 0]) }}"  id="v-pills-tab4-tab" data-toggle="pill" href="#v-pills-tab4" role="tab" aria-controls="v-pills-tab4" aria-selected="false">
 																	<div class="icon">
@@ -561,6 +576,8 @@
 															<div class="tab-pane fade" id="v-pills-tab3" role="tabpanel" aria-labelledby="v-pills-tab3-tab">
 															</div>
 															@endif
+															<div class="tab-pane fade" id="v-pills-tab9" role="tabpanel" aria-labelledby="v-pills-tab9-tab">
+															</div>
 															@endif
 															@if($gs->is_instamojo == 1)
 																<div class="tab-pane fade" id="v-pills-tab4" role="tabpanel" aria-labelledby="v-pills-tab4-tab">
@@ -604,6 +621,7 @@
 
 															<a href="javascript:;" id="step2-btn" class="mybtn1 mr-3">{{ $langg->lang757 }}</a>
 															<button type="submit" id="final-btn" class="mybtn1">{{ $langg->lang753 }}</button>
+															
 													</div>
 
 												</div>
@@ -1284,7 +1302,6 @@ var ck = 0;
 	});
 
 	$('#final-btn').on('click',function(){
-		debugger;
 		ck = 1;
 	})
 

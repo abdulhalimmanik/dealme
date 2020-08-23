@@ -37,7 +37,6 @@
 <section class="tempcart">
 
 @if(!empty($tempcart))
-
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
