@@ -43,7 +43,64 @@
 
                         @include('includes.admin.form-both')
 
+                          <div class="row justify-content-center">
+                            <div class="col-lg-3">
+                              <div class="left-area">
+                                <h4 class="heading">
+                                    {{ __('SSL Commerece') }}
+                                </h4>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="action-list"> 
+                                    <select class="process select droplinks {{ $gs->ssl_check == 1 ? 'drop-success' : 'drop-danger' }}">
+                                      <option data-val="1" value="1" {{ $gs->ssl_check == 1 ? 'selected' : '' }}>{{ __('Activated') }}</option>
+                                      <option data-val="0" value="0" {{ $gs->ssl_check == 0 ? 'selected' : '' }}>{{ __('Deactivated') }}</option>
+                                    </select>
+                                  </div>
+                            </div>
+                          </div>
 
+
+                        <div class="row justify-content-center">
+                          <div class="col-lg-3">
+                            <div class="left-area">
+                                <h4 class="heading">{{ __('Store Id') }} *
+                                  </h4>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <input type="text" class="input-field" placeholder="{{ __('Store Id') }}" name="ssl_store_id" value="{{ $gs->ssl_store_id }}" required="">
+                          </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                          <div class="col-lg-3">
+                            <div class="left-area">
+                                <h4 class="heading">{{ __('Store Password') }} *
+                                  </h4>
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <input type="text" class="input-field" placeholder="{{ __('Store Password') }}" name="ssl_store_password" value="{{ $gs->ssl_store_password }}" required="">
+                          </div>
+                        </div>
+
+
+                        <div class="row justify-content-center">
+                          <div class="col-lg-3">
+                            <div class="left-area">
+                                <h4 class="heading">{{ __('Text') }} *</h4>
+
+                            </div>
+                          </div>
+                          <div class="col-lg-6">
+                            <textarea class="input-field" name="ssl_text" placeholder="{{ __('Text') }}">{{ $gs->ssl_text }}</textarea>
+
+                          </div>
+                        </div>
+
+                        <hr>
                         <div class="row justify-content-center">
                             <div class="col-lg-3">
                               <div class="left-area">

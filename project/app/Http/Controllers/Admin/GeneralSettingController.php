@@ -337,6 +337,14 @@ class GeneralSettingController extends Controller
         $data->update();
     }
 
+    public function ssl($status)
+    {
+
+        $data = Generalsetting::findOrFail(1);
+        $data->ssl_check = $status;
+        $data->update();
+    }
+
     public function guest($status)
     {
         $data = Generalsetting::findOrFail(1);

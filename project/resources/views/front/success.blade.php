@@ -180,7 +180,7 @@
                                                                         @if($order->method=="Paypal")
                                                                         {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{ isset($_GET['tx']) ? $_GET['tx'] : '' }}</p>
                                                                         @else
-                                                                        {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{$order->txnid}}</p>
+                                                                {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{$order->txnid}} {{$bank_tran_id}}</p>
                                                                         @endif
 
                                                                     @endif

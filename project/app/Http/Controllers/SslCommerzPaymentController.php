@@ -175,11 +175,14 @@ class SslCommerzPaymentController extends Controller
 
     public function success(Request $request)
     {
-        echo "Transaction is Successful";
-
+        // echo "Transaction is Successful";
+        
         $tran_id = $request->input('tran_id');
         $amount = $request->input('amount');
         $currency = $request->input('currency');
+        $bank_tran_id = $request->input('bank_tran_id');
+        // dd($bank_tran_id);
+        $card_type = $request->input('card_type');
 
         $sslc = new SslCommerzNotification();
 
@@ -189,6 +192,7 @@ class SslCommerzPaymentController extends Controller
             ->select('order_number', 'payment_status', 'currency_value', 'currency_sign')->first();
 
         if ($order_detials->payment_status == 'Pending') {
+            // dd('hello payment pending');
             $validation = $sslc->orderValidate($tran_id, $amount, $currency, $request->all());
 
             if ($validation == TRUE) {
@@ -199,9 +203,26 @@ class SslCommerzPaymentController extends Controller
                 */
                 $update_product = DB::table('orders')
                     ->where('order_number', $tran_id)
-                    ->update(['status' => 'Processing']);
-
-                echo "<br >Transaction is successfully Completed";
+                    ->update([
+                        'status' => 'Processing',
+                        'txnid' => $bank_tran_id,
+                        'card_type' => $card_type]);
+                // dd($request->all());        
+                // echo "<br >Transaction is successfully Completed";
+                // $this->code_image();
+        if (Session::has('tempcart')) {
+            $oldCart = Session::get('tempcart');
+            $tempcart = new Cart($oldCart);
+            $order = Session::get('temporder');
+            Session::put('bank_tran_id', $bank_tran_id);
+            $bank_tran_id = Session::get('bank_tran_id');
+            // dd($bank_tran_id);
+        } else {
+            $tempcart = '';
+            return redirect()->back();
+        }
+        // dd($order->totalQty);
+        return view('front.success', compact('tempcart', 'order', 'bank_tran_id'));
             } else {
                 /*
                 That means IPN did not work or IPN URL was not set in your merchant panel and Transation validation failed.
@@ -213,10 +234,22 @@ class SslCommerzPaymentController extends Controller
                 echo "validation Fail";
             }
         } else if ($order_detials->payment_status == 'Processing' || $order_detials->payment_status == 'Complete') {
+            dd('hello payment processing');
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to udate database.
              */
-            echo "Transaction is successfully Completed";
+            // echo "Transaction is successfully Completed";
+            
+        if (Session::has('tempcart')) {
+            $oldCart = Session::get('tempcart');
+            $tempcart = new Cart($oldCart);
+            $order = Session::get('temporder');
+        } else {
+            $tempcart = '';
+            return redirect()->back();
+        }
+        // dd($order->totalQty);
+        return view('front.success', compact('tempcart', 'order'));
         } else {
             #That means something wrong happened. You can redirect customer to your product page.
             echo "Invalid Transaction";
@@ -264,7 +297,7 @@ class SslCommerzPaymentController extends Controller
     }
 
     public function ipn(Request $request)
-    {
+    {   dd('hello ipn');
         #Received all the payement information from the gateway
         if ($request->input('tran_id')) #Check transation id is posted or not.
         {

@@ -1,7 +1,7 @@
-dashboard add ssl commerce
-order show after payment
-info save in database of transaction 
-status change of transaction
+dashboard add ssl commerce - done [route]
+order show after payment - done [amount]
+info save in database of transaction - done
+status change of transaction - done [success]
 flow check of ssl commerce + * order check
 route check
 table change of other action
