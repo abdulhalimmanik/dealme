@@ -139,7 +139,7 @@ class GeneralSettingController extends Controller
     {
         //--- Validation Section
         $validator = Validator::make(Input::all(), $this->rules);
-
+        
         if ($validator->fails()) {
           return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }

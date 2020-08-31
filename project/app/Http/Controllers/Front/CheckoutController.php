@@ -546,7 +546,7 @@ class CheckoutController extends Controller
     }
 
     public function sslcommerce(Request $request)
-    {
+    {   
         if ($request->pass_check) {
             $users = User::where('email', '=', $request->personal_email)->get();
             if (count($users) == 0) {
@@ -578,9 +578,12 @@ class CheckoutController extends Controller
         } else {
             $curr = Currency::where('is_default', '=', 1)->first();
         }
+
         $gs = Generalsetting::findOrFail(1);
         $oldCart = Session::get('cart');
+        // dd($oldCart);
         $cart = new Cart($oldCart);
+        // ঝামেলা
         foreach ($cart->items as $key => $prod) {
             if (!empty($prod['item']['license']) && !empty($prod['item']['license_qty'])) {
                 foreach ($prod['item']['license_qty'] as $ttl => $dtl) {
@@ -642,7 +645,7 @@ class CheckoutController extends Controller
         $order['currency_value'] = $curr->value;
         $order['vendor_shipping_id'] = $request->vendor_shipping_id;
         $order['vendor_packing_id'] = $request->vendor_packing_id;
-
+        
         if (Session::has('affilate')) {
             $val = $request->total / $curr->value;
             $val = $val / 100;
@@ -653,8 +656,9 @@ class CheckoutController extends Controller
             $order['affilate_user'] = $user->name;
             $order['affilate_charge'] = $sub;
         }
-        $order->save();
 
+        $order->save();
+        
         $track = new OrderTrack;
         $track->title = 'Pending';
         $track->text = 'You have successfully placed your order.';
@@ -742,68 +746,6 @@ class CheckoutController extends Controller
         Session::forget('coupon_percentage');
 
         //Sending Email To Buyer change status
-        // dd('hello');
-        // $post_data = array();
-        // $post_data['total_amount'] = $order['currency_value']; # You cant not pay less than 10
-        // $post_data['currency'] = $order['currency_sign'];
-        // $post_data['tran_id'] = $order['order_number']; // tran_id must be unique
-
-        // # CUSTOMER INFORMATION
-        // $post_data['cus_name'] = $order['customer_name'];
-        // $post_data['cus_email'] = $order['customer_email'];
-        // $post_data['cus_add1'] = $order['currency_address'];
-        // $post_data['cus_add2'] = "";
-        // $post_data['cus_city'] = "";
-        // $post_data['cus_state'] = "";
-        // $post_data['cus_postcode'] = "";
-        // $post_data['cus_country'] = "Bangladesh";
-        // $post_data['cus_phone'] = $order['customer_phone'];
-        // $post_data['cus_fax'] = "";
-
-        // # SHIPMENT INFORMATION
-        // $post_data['ship_name'] = "Store Test";
-        // $post_data['ship_add1'] = "Dhaka";
-        // $post_data['ship_add2'] = "Dhaka";
-        // $post_data['ship_city'] = "Dhaka";
-        // $post_data['ship_state'] = "Dhaka";
-        // $post_data['ship_postcode'] = "1000";
-        // $post_data['ship_phone'] = "";
-        // $post_data['ship_country'] = "Bangladesh";
-
-        // $post_data['shipping_method'] = "NO";
-        // $post_data['product_name'] = "Computer";
-        // $post_data['product_category'] = "Goods";
-        // $post_data['product_profile'] = "physical-goods";
-
-        // # OPTIONAL PARAMETERS
-        // $post_data['value_a'] = "ref001";
-        // $post_data['value_b'] = "ref002";
-        // $post_data['value_c'] = "ref003";
-        // $post_data['value_d'] = "ref004";
-
-        // $update_product = DB::table('orders')
-        //     ->where('order_number', $order['order_number'])
-        //     ->updateOrInsert([
-        //         'customer_name' => $order['customer_name'],
-        //         'customer_email' => $order['customer_email'],
-        //         'customer_phone' => $order['customer_phone'],
-        //         'currency_value' => $order['currency_value'],
-        //         'status' => 'Pending',
-        //         'customer_address' => $order['customer_address'],
-        //         'order_number' => $order['order_number'],
-        //         'currency_sign' => $order['currency_sign']
-        //     ]);
-        // // dd('hello');
-        // $sslc = new SslCommerzNotification();
-        // # initiate(Transaction Data , false: Redirect to SSLCOMMERZ gateway/ true: Show all the Payement gateway here )
-        // $payment_options = $sslc->makePayment($post_data, 'checkout', 'json');
-
-        // if (!is_array($payment_options)) {
-        //     // dd($payment_options);
-        //     print_r($payment_options);
-        //     $payment_options = array();
-        // }
-
         if ($gs->is_smtp == 1) {
             $data = [
                 'to' => $request->email,
@@ -842,9 +784,10 @@ class CheckoutController extends Controller
             $headers = "From: " . $gs->from_name . "<" . $gs->from_email . ">";
             // mail($to, $subject, $msg, $headers);
         }
-        $pay_url = action('Front\PaymentController@payviasslcommerce');
-        // dd($pay_url);
+        
+        $pay_url = action('Front\PaymentController@payviasslcommerce', ['order_number' => $order->order_number]);
         return redirect($pay_url);
+
     }
 
     public function gateway(Request $request)

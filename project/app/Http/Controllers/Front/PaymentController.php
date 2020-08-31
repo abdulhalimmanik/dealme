@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
-
+use DB;
 class PaymentController extends Controller
 {
 
@@ -268,24 +268,17 @@ class PaymentController extends Controller
             $tempcart = '';
             return redirect()->back();
         }
-        // dd($order->totalQty);
         return view('front.success', compact('tempcart', 'order'));
     }
 
-    public function payviasslcommerce()
+    public function payviasslcommerce($order_number)
     {
-        $this->code_image();
-        if (Session::has('tempcart')) {
-            $oldCart = Session::get('tempcart');
-            $tempcart = new Cart($oldCart);
-            $order = Session::get('temporder');
+        if($order_number) {
+            $order = DB::table('orders')->where('order_number', $order_number)->first();
+            return view('front.payviasslcommerce', compact('order'));
         } else {
-            $tempcart = '';
             return redirect()->back();
         }
-        // dd($tempcart);
-        return view('front.payviasslcommerce', compact('tempcart', 'order'));
-        // return redirect('payment.sslcom');
     }
 
 

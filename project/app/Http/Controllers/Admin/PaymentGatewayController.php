@@ -100,7 +100,7 @@ class PaymentGatewayController extends Controller
         $input = $request->all();  
         $data->update($input);
         //--- Logic Section Ends
-
+                        
         //--- Redirect Section     
         $msg = 'Data Updated Successfully.'.'<a href="'.route("admin-payment-index").'">View Payment Lists</a>';
         return response()->json($msg);    

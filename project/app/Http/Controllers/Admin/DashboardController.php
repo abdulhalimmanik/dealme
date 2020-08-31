@@ -35,6 +35,7 @@ class DashboardController extends Controller
 
             $sales .=  "'".Order::where('status','=','completed')->whereDate('created_at', '=', date("Y-m-d", strtotime('-'. $i .' days')))->count()."',";
         }
+        
         $users = User::all();
         $products = Product::all();
         $blogs = Blog::all();

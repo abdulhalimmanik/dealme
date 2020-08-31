@@ -871,13 +871,9 @@ Route::prefix('admin')->group(function () {
 
 // ************************************ USER SECTION **********************************************
 // SSLCOMMERZ Start
-// Route::get('/example1', function () {
-//   dd(DB::table('sslorders')->get());
-//   // dd($flights);
-//   return $flights;
-// });
-Route::get('/example1', 'SslCommerzPaymentController@exampleEasyCheckout');
-Route::get('/example2', 'SslCommerzPaymentController@exampleHostedCheckout');
+
+// Route::get('/example1', 'SslCommerzPaymentController@exampleEasyCheckout');
+// Route::get('/example2', 'SslCommerzPaymentController@exampleHostedCheckout');
 
 Route::post('/pay', 'SslCommerzPaymentController@index');
 Route::post('/pay-via-ajax', 'SslCommerzPaymentController@payViaAjax');
@@ -887,19 +883,7 @@ Route::post('/fail', 'SslCommerzPaymentController@fail');
 Route::post('/cancel', 'SslCommerzPaymentController@cancel');
 
 Route::post('/ipn', 'SslCommerzPaymentController@ipn');
-
-// Route::get('/example1', 'CheckoutController@exampleEasyCheckout');
-// Route::get('/example2', 'CheckoutController@exampleHostedCheckout');
-
-// Route::post('/pay', 'CheckoutController@index');
-// Route::post('/pay-via-ajax', 'CheckoutController@payViaAjax');
-
-// Route::post('/success', 'CheckoutController@success');
-// Route::post('/fail', 'CheckoutController@fail');
-// Route::post('/cancel', 'CheckoutController@cancel');
-
-// Route::post('/ipn', 'CheckoutController@ipn');
-Route::get('/payviasslcommerce', 'Front\PaymentController@payviasslcommerce')->name('payviasslcommerce');
+Route::get('/payviasslcommerce/{order_number}', 'Front\PaymentController@payviasslcommerce');
 //SSLCOMMERZ END
 
 Route::prefix('user')->group(function () {

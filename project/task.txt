@@ -1,8 +1,8 @@
 dashboard add ssl commerce - done [route]
-order show after payment - done [amount]
+order show after payment - done [amount] ok
 info save in database of transaction - done
-status change of transaction - done [success]
-flow check of ssl commerce + * order check
+status change of transaction - done [success] ok
+flow check of ssl commerce + * order check done
 route check
 table change of other action
 
@@ -15,3 +15,15 @@ order_number
 payment_status
 status
 pay_id
+
+-----------
+
+route check
+cancel / fail error
+txn card type - done
+route in payment gateway 
+
+problem
+getMessageBag - ok
+upload
+processing - ok

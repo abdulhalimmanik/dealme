@@ -2,7 +2,6 @@
 
 
 
-
 @section('content')
 
 <!-- Breadcrumb Area Start -->
@@ -179,8 +178,11 @@
                                                                         @endif
                                                                         @if($order->method=="Paypal")
                                                                         {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{ isset($_GET['tx']) ? $_GET['tx'] : '' }}</p>
+                                                                        @elseif($order->method=="SSL Commerce")
+                                                                        {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{ DB::table('orders')->where('order_number','=',$order->order_number)->first()->txnid }}</p>
+                                                                        
                                                                         @else
-                                                                {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{$order->txnid}} {{$bank_tran_id}}</p>
+                                                                {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{$order->txnid}}</p>
                                                                         @endif
 
                                                                     @endif
